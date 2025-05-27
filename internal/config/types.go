@@ -7,5 +7,5 @@ type Config struct {
 
 
 func Get() (Config, error) {
-	
+	data, err
 }
