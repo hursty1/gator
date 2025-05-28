@@ -6,7 +6,6 @@ import (
 	"github.com/hursty1/gator/internal/config"
 )
 func main() {
-	fmt.Println("hello")
 
 	c, err := config.Read()
 	if err != nil {
@@ -24,5 +23,6 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(c.Current_user_name)
+	// fmt.Println(c.Current_user_name)
+	fmt.Printf("%+v\n", c)
 }

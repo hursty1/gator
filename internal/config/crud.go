@@ -2,7 +2,6 @@ package config
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"os"
 )
 
@@ -14,26 +13,27 @@ func getConfigFile() (Config, error) {
 
 	defer data.Close()
 
-	byteData, _ := ioutil.ReadAll(data)
-	var config Config
-
-	err = json.Unmarshal(byteData, &config)
-	if err != nil {
+	decoder := json.NewDecoder(data)
+	config := Config{}
+	if err = decoder.Decode(&config); err != nil {
 		return Config{}, err
 	}
+	
 	return config, nil
 }
 
 
-func (c Config) write(username string) error {
-	c.Current_user_name = username
-	byteData, err := json.MarshalIndent(c, "", "  ")
+func write(c Config) error {
+	
+	file, err := os.Create(getConfigFilePath())
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
-	err = os.WriteFile(getConfigFilePath(), byteData, 0644)
-	if err != nil {
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	if err = encoder.Encode(c); err != nil {
 		return err
 	}
 	return nil
