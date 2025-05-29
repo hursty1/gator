@@ -12,7 +12,7 @@ type Config struct {
 }
 
 
-const configFileName = "boot.dev/gator/.gatorconfig.json"
+const configFileName = ".gatorconfig.json"
 
 func getConfigFilePath() string {
 	home_dir, err := os.UserHomeDir()
@@ -23,3 +23,4 @@ func getConfigFilePath() string {
 	config_fp := home_dir + "/" + configFileName
 	return config_fp
 }
+
